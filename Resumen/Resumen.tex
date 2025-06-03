@@ -1,0 +1,73 @@
+
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath} % Required for mathematical environments like align
+
+\title{Resumen MIPS32}
+\author{Ángel Besteiro}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section*{Introducción al Lenguaje Máquina y MIPS32}
+El lenguaje máquina es un concepto fundamental en el trabajo con computadoras, compuesto por "instrucciones" o "pasos a seguir" que el equipo ejecuta para completar tareas específicas.Aunque existen numerosos lenguajes de programación con similitudes en sus requerimientos y propósitos, cada uno posee sus propias ventajas, desventajas y características adicionales.
+
+El MIPS32 es un lenguaje de bajo nivel, cercano al lenguaje máquina, donde el procesador opera con instrucciones binarias.Este lenguaje permite dar instrucciones que son traducidas a binario y, a su vez, retorna resultados que son interpretados del binario para su comprensión.El lenguaje al que se refiere este escrito es MIPS32 ensamblador se basa en una serie de instrucciones preestablecidas para agilizar el código y el flujo del algoritmo.
+
+\section*{Memoria y Registros}
+El sistema cuenta con memoria y registros.La memoria es donde se almacenan datos de distinto tipo.Los registros también son memoria, pero son espacios donde el sistema puede operar directamente.Para usar los datos en operaciones, estos deben ser movilizados de la memoria a un registro y luego devueltos a su origen o a otra ubicación en la memoria.Se dispone de 32 registros, algunos de uso específico y otros más generales.
+
+\section*{Tipos de Operaciones}
+
+\subsection*{Operaciones Aritméticas}
+Estas operaciones son básicas en cualquier sistema e incluyen suma y resta.
+\begin{itemize}
+    \item \textbf{add:} Formato: \texttt{add(\$s1,\$s2,\$s3)}. [span_11](start_span)Realiza la suma de las dos últimas "variables" (\texttt{\$s2} y \texttt{\$s3}) y coloca el resultado en la primera "variable" (\texttt{\$s1}).
+    \item \textbf{addi (add immediate):} Similar a \texttt{add}, pero se usa para cargar "datos" o constantes. Formato: \texttt{addi(\$s1,\$s2,100)}.
+    \item \textbf{sub (subtract):} Funciona como una resta. Formato: \texttt{sub(\$s1,\$s2,\$s3)}. Realiza la diferencia de los últimos componentes (\texttt{\$s2} y \texttt{\$s3}) y la coloca en el primero (\texttt{\$s1}).
+\end{itemize}
+
+\subsection*{Operaciones de Transferencia de Datos}
+Instrucciones específicas para movilizar datos entre espacios de memoria y registros.
+\begin{itemize}
+    \item \textbf{load word (lw):} Moviliza una palabra de una dirección de memoria a un registro.
+    \item \textbf{store word (sw):} Moviliza una palabra de un registro a una dirección de memoria.
+    \item \textbf{load half (lh):} Carga media palabra de memoria a registros.
+    \item \textbf{store half (sh):} Carga media palabra de registros a memoria.
+    \item \textbf{load byte (lb):} Carga un byte de memoria a registros.
+    \item \textbf{store byte (sb):} Carga un byte de registros a memoria.
+   \item \textbf{load upper immediate (lui):} Carga una constante de 16 bits en la parte superior de un registro.
+\end{itemize}
+
+\subsection*{Operaciones Lógicas}
+Instrucciones que contemplan expresiones lógicas.
+\begin{itemize}
+    \item \textbf{and:} Opera bit a bit con tres registros, implementando la compuerta AND.
+    \item \textbf{or:} Opera bit a bit con tres registros, implementando la compuerta OR.
+    \item \textbf{not:} Opera bit a bit con tres registros, implementando la compuerta NOT.
+    \item \textbf{andi (and immediate):} Opera bit a bit con registros y una constante, implementando la compuerta AND.
+    \item \textbf{ori (or immediate):} Opera bit a bit con registros y una constante, implementando la compuerta OR.
+    \item \textbf{sll (shift left logical):} Desplazamiento lógico a la izquierda por una constante.
+    \item \textbf{srl (shift right logical):} Desplazamiento lógico a la derecha por una constante.
+\end{itemize}
+
+\subsection*{Salto Condicional}
+Instrucciones para control de flujo basadas en condiciones.
+\begin{itemize}
+    \item \textbf{beq (branch on equal):} Comprueba la igualdad.
+    \item \textbf{bne (branch on not equal):} Comprueba la no igualdad.
+    \item \textbf{slt (set on less than):} Compara si es menor que.
+    \item \textbf{slti (set on less than immediate):} Compara si es menor que una constante.
+\end{itemize}
+
+\subsection*{Salto Incondicional}
+(start_span)Instrucciones para saltos directos en el flujo del programa.
+\begin{itemize}
+    \item \textbf{j (jump):} Salta a un destino.
+    \item \textbf{jr (jump register):} Utilizado para retornar de un procedimiento.
+    \item \textbf{jal (jump and link):} Utilizado para la llamada a un procedimiento.
+\end{itemize}
+
+\end{document}
