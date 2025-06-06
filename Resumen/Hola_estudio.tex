@@ -1,0 +1,99 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+\usepackage{amsmath} % Para notación matemática si fuera necesaria, aunque no se usa en este texto
+\usepackage{hyperref} % Para enlaces si los hubiera
+
+\title{Resumen de MIPS32: Lenguaje Ensamblador}
+\author{Angel Besteiro}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Introducción al Lenguaje Ensamblador MIPS32}
+
+El **lenguaje máquina** es un concepto fundamental para entender cómo funcionan las computadoras. Se compone de una serie de "instrucciones" o "pasos a seguir" que el equipo ejecuta para completar una tarea específica. Aunque existen muchos lenguajes de programación, a grandes rasgos no difieren demasiado entre sí, y los equipos que los emplean tienen requisitos y propósitos similares. Por supuesto, cada lenguaje tiene sus particularidades, ventajas y desventajas, y la elección del lenguaje adecuado depende de la pericia del programador.
+
+El lenguaje que presentamos hoy es un **lenguaje de bajo nivel**, lo que significa que está muy cerca del lenguaje máquina. El procesador opera con instrucciones en binario; mediante este lenguaje, podemos darle instrucciones que son traducidas a binario y nos retornan resultados que son interpretados del binario para su comprensión. Como se mencionó, el lenguaje se basa en instrucciones, y el ensamblador MIPS32, al que se refiere este escrito, tiene una serie de instrucciones preestablecidas con el fin de agilizar el código y el flujo del algoritmo.
+
+Se dispone de **memoria** y **registros**. La memoria es donde se almacenan los datos de distinto tipo. Los registros son también una forma de memoria, pero es donde el sistema puede operar directamente. Para ser utilizados en operaciones, los datos deben ser movilizados de la memoria a un registro y luego devueltos a su origen o a otra ubicación en la memoria. MIPS32 cuenta con 32 registros, algunos específicos y otros de uso más general.
+
+\section*{Operaciones}
+
+\subsection*{Aritméticas}
+
+Estas operaciones son básicas en cualquier sistema: suma y resta.
+\begin{itemize}
+    \item \textbf{add:} Formato: `add($s1, $s2, $s3) \implies \$s1 = \$s2 + \$s3`. Toma el primer registro y coloca el resultado de la suma de los dos últimos registros en él.
+    \item \textbf{addi (add immediate):} Parecida a `add`, pero se usa para cargar "datos" o constantes. Formato: `addi($s1, $s2, 100) \implies \$s1 = \$s2 + 100`.
+    \item \textbf{sub (subtract):} Funciona como una resta. Formato: `sub($s1, $s2, $s3) \implies \$s1 = \$s2 - \$s3`, calculando la diferencia de los últimos componentes en el primero.
+\end{itemize}
+
+\subsection*{Transferencia de Datos}
+
+Operaciones específicas para movilizar datos entre espacios de memoria y registros.
+\begin{itemize}
+    \item \textbf{lw (load word):} Moviliza una palabra (32 bits) de una dirección de memoria a un registro.
+    \item \textbf{sw (store word):} Moviliza una palabra (32 bits) de un registro a una dirección de memoria.
+    \item \textbf{lh (load half):} Carga media palabra (16 bits) de memoria a un registro.
+    \item \textbf{sh (store half):} Carga media palabra (16 bits) de un registro a memoria.
+    \item \textbf{lb (load byte):} Carga un byte (8 bits) de memoria a un registro.
+    \item \textbf{sb (store byte):} Carga un byte (8 bits) de un registro a memoria.
+    \item \textbf{lui (load upper immediate):} Carga una constante de 16 bits en la parte superior (más significativa) de un registro.
+\end{itemize}
+
+\subsection*{Lógicas}
+
+Instrucciones que realizan operaciones lógicas bit a bit.
+\begin{itemize}
+    \item \textbf{and:} Opera bit a bit con tres registros, implementando una compuerta AND.
+    \item \textbf{or:} Opera bit a bit con tres registros, implementando una compuerta OR.
+    \item \textbf{not:} Opera bit a bit con un registro (pseudo-instrucción que usa `nor` con `$zero`), implementando una compuerta NOT.
+    \item \textbf{andi (and immediate):} Opera bit a bit con un registro y una constante, implementando una compuerta AND.
+    \item \textbf{ori (or immediate):} Opera bit a bit con un registro y una constante, implementando una compuerta OR.
+    \item \textbf{sll (shift left logical):} Desplazamiento lógico a la izquierda de bits por una constante.
+    \item \textbf{srl (shift right logical):} Desplazamiento lógico a la derecha de bits por una constante.
+\end{itemize}
+
+\subsection*{Salto Condicional}
+
+Instrucciones que alteran el flujo de ejecución basándose en una condición.
+\begin{itemize}
+    \item \textbf{beq (branch on equal):} Comprueba si dos registros son iguales y salta si lo son.
+    \item \textbf{bne (branch on not equal):} Comprueba si dos registros no son iguales y salta si no lo son.
+    \item \textbf{slt (set on less than):} Compara si el primer registro es menor que el segundo, y pone 1 en un registro destino si es verdad, 0 si es falso.
+    \item \textbf{slti (set on less than immediate):} Compara si un registro es menor que una constante, y pone 1 en un registro destino si es verdad, 0 si es falso.
+\end{itemize}
+
+\subsection*{Salto Incondicional}
+
+Instrucciones que alteran el flujo de ejecución sin una condición.
+\begin{itemize}
+    \item \textbf{j (jump):} Salta a una dirección de destino especificada.
+    \item \textbf{jr (jump register):} Salta a la dirección contenida en un registro (comúnmente usado para retornar de un procedimiento).
+    \item \textbf{jal (jump and link):} Salta a una dirección de destino y guarda la dirección de retorno (la siguiente instrucción) en el registro \texttt{\$ra} (usado para llamadas a procedimientos).
+\end{itemize}
+
+\section*{Registros de MIPS32}
+
+La arquitectura MIPS32 cuenta con 32 registros de propósito general, además de algunos registros especiales. Sus usos convencionales son los siguientes:
+
+\begin{itemize}
+    \item \textbf{\texttt{\$zero} o \texttt{\$0} (Registro 0):} Siempre contiene el valor 0. No se puede escribir en él. Es útil para inicializar registros a cero o para operaciones que requieren un cero.
+    \item \textbf{\texttt{\$at} o \texttt{\$1} (Assembler Temporary):} Reservado para el ensamblador. Lo usa para convertir pseudo-instrucciones. No debe ser utilizado por el programador.
+    \item \textbf{\texttt{\$v0}-\texttt{\$v1} o \texttt{\$2}-\texttt{\$3} (Value):} Utilizados para retornar valores de funciones. \texttt{\$v0} es el registro principal para el valor de retorno, y \texttt{\$v1} se usa para un segundo valor si es necesario.
+    \item \textbf{\texttt{\$a0}-\texttt{\$a3} o \texttt{\$4}-\texttt{\$7} (Argument):} Utilizados para pasar los primeros cuatro argumentos a una función. Si hay más argumentos, se pasan en la pila. Son "caller-saved".
+    \item \textbf{\texttt{\$t0}-\texttt{\$t9} o \texttt{\$8}-\texttt{\$15}, \texttt{\$24}-\texttt{\$25} (Temporary):} Registros temporales. Se utilizan para almacenar valores que no necesitan preservarse entre llamadas a funciones. Son "caller-saved".
+    \item \textbf{\texttt{\$s0}-\texttt{\$s7} o \texttt{\$16}-\texttt{\$23} (Saved):} Registros guardados. Se utilizan para almacenar valores que deben preservarse entre llamadas a funciones. Son "callee-saved".
+    \item \textbf{\texttt{\$k0}-\texttt{\$k1} o \texttt{\$26}-\texttt{\$27} (Kernel):} Reservados para el sistema operativo (kernel). Los programas de usuario no deben usarlos.
+    \item \textbf{\texttt{\$gp} o \texttt{\$28} (Global Pointer):} Puntero a la sección de datos globales. Facilita el acceso a variables globales y estáticas.
+    \item \textbf{\texttt{\$sp} o \texttt{\$29} (Stack Pointer):} Puntero de pila. Apunta al tope de la pila y se utiliza para gestionar el marco de pila en llamadas a funciones.
+    \item \textbf{\texttt{\$fp} o \texttt{\$30} (Frame Pointer):} Puntero de marco. Apunta a una posición fija dentro del marco de pila actual. No siempre se usa.
+    \item \textbf{\texttt{\$ra} o \texttt{\$31} (Return Address):} Dirección de retorno. Almacena la dirección de la instrucción inmediatamente después de una llamada a función (\texttt{jal}).
+\end{itemize}
+
+\end{document}
+
